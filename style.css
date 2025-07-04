@@ -1,58 +1,66 @@
+/* Reset universal - Elimina márgenes y paddings por defecto de todos los elementos */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: 'Montserrat';
 }
 
+/* Configuración del cuerpo principal - Define fuente, fondo degradado y altura mínima */
 body {
     font-family: 'Arial', sans-serif;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #2c3e50, #3498db, #9b59b6);
     min-height: 100vh;
     overflow-x: hidden;
 }
 
+/* Contenedor principal - Ocupa toda la pantalla y sirve como base para los elementos */
 .container {
     width: 100%;
     min-height: 100vh;
     position: relative;
 }
 
-/* Header */
+/* Header - Barra superior con título y botón, fondo transparente con desenfoque */
 header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 40px;
+    padding: 8px 50px;
     background: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(10px);
     border-bottom: 1px solid rgba(255, 255, 255, 0.2);
 }
 
+/* Título principal - Texto blanco con sombra para legibilidad */
 header h1 {
     color: white;
-    font-size: 2.5rem;
-    font-weight: 300;
-    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    font-size: 2rem;
+    font-weight: 400;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
+/* Botón crear carta - Gradiente naranja-rojo con efectos hover y sombra */
 .create-btn {
-    background: linear-gradient(45deg, #ff6b6b, #ee5a6f);
+    background: linear-gradient(45deg, #e74c3c, #f39c12);
     color: white;
     border: none;
     padding: 12px 24px;
     border-radius: 25px;
     font-size: 1rem;
+    font-weight: 600;
     cursor: pointer;
     transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
+/* Efecto hover del botón crear - Elevación y sombra más pronunciada */
 .create-btn:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(255, 107, 107, 0.6);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
 }
 
-/* Contenedor principal de cartas */
+/* Contenedor de cartas - Área principal donde flotan las cartas con padding y overflow oculto */
 .cards-container {
     position: relative;
     min-height: calc(100vh - 100px);
@@ -60,11 +68,11 @@ header h1 {
     overflow: hidden;
 }
 
-/* Sobres flotantes */
+/* Carta flotante - Contenedor individual de cada sobre con posición absoluta y animaciones */
 .floating-card {
     position: absolute;
-    width: 280px;
-    height: 200px;
+    width: 252px;  /* 280px - 10% = 252px */
+    height: 180px; /* 200px - 10% = 180px */
     cursor: grab;
     transition: all 0.3s ease;
     animation: spaceFloat 4s ease-in-out infinite;
@@ -73,14 +81,17 @@ header h1 {
     user-select: none;
 }
 
+/* Animación alternativa para cartas impares - Duración diferente para variedad */
 .floating-card:nth-child(odd) {
     animation: spaceFloat 5s ease-in-out infinite;
 }
 
+/* Animación alternativa para cartas pares - Patrón de deriva diferente */
 .floating-card:nth-child(even) {
     animation: spaceDrift 6s ease-in-out infinite;
 }
 
+/* Estado de arrastre - Elimina animaciones y añade efectos visuales durante drag & drop */
 .floating-card.dragging {
     cursor: grabbing;
     z-index: 10000 !important;
@@ -90,21 +101,27 @@ header h1 {
     opacity: 0.9; /* Efecto visual sutil durante el arrastre */
 }
 
+/* Sombra especial durante arrastre - Efecto visual para carta que se está moviendo */
 .floating-card.dragging .envelope {
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
 }
 
+/* Sobre principal - Contenedor base con fondo beige y efectos 3D */
 .envelope {
     position: relative;
     width: 100%;
     height: 100%;
-    background: linear-gradient(145deg, #f8f4e6, #e8dcc0);
+    background: linear-gradient(145deg, #f5f5dc, #faebd7);
     border-radius: 8px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.4);
     transform-style: preserve-3d;
+    perspective: 1200px;
     transition: all 0.3s ease;
 }
 
+/* Parte trasera del sobre - Crea el efecto visual de profundidad con color intermedio */
 .envelope::before {
     content: '';
     position: absolute;
@@ -112,76 +129,67 @@ header h1 {
     left: 0;
     width: 100%;
     height: 50%;
-    background: linear-gradient(145deg, #e8dcc0, #d4c4a0);
+    background: linear-gradient(145deg, #f0e6d2, #eaddc4);
     clip-path: polygon(0 0, 100% 0, 50% 100%);
     border-radius: 8px 8px 0 0;
     z-index: 2;
     transition: all 0.6s ease;
     transform-origin: top center;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+/* Solapa del sobre - Parte superior que se puede "abrir" con color ligeramente más oscuro para contraste */
 .envelope-flap {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 50%;
-    background: linear-gradient(145deg, #d4c4a0, #c0b080);
+    background: linear-gradient(145deg, #e8dcc6, #ddd1b8);
     clip-path: polygon(0 0, 100% 0, 50% 100%);
     border-radius: 8px 8px 0 0;
     z-index: 3;
     transition: all 0.6s ease;
     transform-origin: top center;
     cursor: pointer;
+    box-shadow: 
+        0 6px 15px rgba(0, 0, 0, 0.3),
+        inset 0 -3px 6px rgba(0, 0, 0, 0.15),
+        0 1px 3px rgba(0, 0, 0, 0.2);
 }
 
+/* Cuerpo del sobre - Base visible con el mismo fondo beige que el envelope */
 .envelope-body {
     position: absolute;
     bottom: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(145deg, #f8f4e6, #e8dcc0);
+    background: linear-gradient(145deg, #f5f5dc, #faebd7);
     border-radius: 8px;
     z-index: 1;
 }
 
+/* Contenido interno - Completamente oculto, no se muestra en el sobre */
 .envelope-content {
-    position: absolute;
-    top: 15px;
-    left: 15px;
-    right: 15px;
-    bottom: 15px;
-    background: rgba(255, 255, 255, 0.95);
-    border-radius: 6px;
-    padding: 15px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    opacity: 0;
-    transform: translateY(20px);
-    transition: all 0.4s ease 0.3s;
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.3);
+    display: none;
 }
 
-.envelope.opening .envelope-flap {
+/* Estado de apertura de la solapa - Solo rotación 3D para efecto visual */
+.envelope.opening .envelope-flap,
+.envelope.clicked .envelope-flap {
     transform: rotateX(-180deg);
 }
 
-.envelope.opening .envelope-content {
-    opacity: 1;
-    transform: translateY(0);
-}
-
+/* Sello postal - Pequeño rectángulo decorativo en esquina superior derecha con gradiente coral */
 .envelope-stamp {
     position: absolute;
     top: 10px;
     right: 10px;
     width: 30px;
     height: 25px;
-    background: linear-gradient(45deg, #ff6b6b, #ee5a6f);
-    border: 2px solid #fff;
+    background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+    border: 2px solid #c44569;
     border-radius: 3px;
     z-index: 4;
     display: flex;
@@ -190,40 +198,47 @@ header h1 {
     font-size: 10px;
     color: white;
     font-weight: bold;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
+/* Dirección del sobre - Texto estilo máquina de escribir en la parte frontal del sobre */
 .envelope-address {
     position: absolute;
-    top: 50%;
+    top: 70%;
     left: 20px;
     transform: translateY(-50%);
     z-index: 4;
-    color: #8b4513;
-    font-size: 0.8rem;
-    font-family: 'Courier New', monospace;
-    line-height: 1.2;
+    color: #654321;
+    font-size: 0.75rem;
+    line-height: 1.3;
     max-width: 60%;
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
 }
 
+/* Efecto hover en carta - Elevación y escala ligeramente mayor al pasar el ratón */
 .floating-card:hover {
     transform: translateY(-5px) scale(1.02);
 }
 
+/* Efecto hover en sobre - Sombra más pronunciada al hacer hover en la carta */
 .floating-card:hover .envelope {
-    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.25);
 }
 
+/* Título del contenido - Encabezado principal dentro del sobre con color oscuro */
 .envelope-content h3 {
-    color: #333;
+    color: #2c3e50;
     font-size: 1.2rem;
     margin-bottom: 8px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    font-weight: 600;
 }
 
+/* Vista previa del contenido - Texto del mensaje limitado a 2 líneas con ellipsis */
 .card-preview {
-    color: #666;
+    color: #555;
     font-size: 0.85rem;
     line-height: 1.3;
     overflow: hidden;
@@ -233,24 +248,29 @@ header h1 {
     -webkit-box-orient: vertical;
 }
 
+/* Información adicional - Contenedor flex para fecha y remitente */
 .card-info {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-top: 8px;
     font-size: 0.75rem;
+    color: #2c3e50;
+}
+
+/* Remitente - Texto en cursiva para mostrar quién envió la carta */
+.card-from {
+    font-style: italic;
+    color: #666;
+}
+
+/* Fecha de la carta - Texto pequeño en color gris para mostrar cuándo se creó */
+.card-date {
+    font-size: 0.7rem;
     color: #888;
 }
 
-.card-from {
-    font-style: italic;
-}
-
-.card-date {
-    font-size: 0.7rem;
-}
-
-/* Animación de flotación espacial */
+/* Animación de flotación espacial - Movimiento suave hacia arriba y abajo con rotación sutil */
 @keyframes spaceFloat {
     0% { 
         transform: translateY(0px) translateX(0px) rotate(0deg); 
@@ -269,7 +289,7 @@ header h1 {
     }
 }
 
-/* Animación de deriva lenta */
+/* Animación de deriva lenta - Movimiento horizontal alternativo para variedad visual */
 @keyframes spaceDrift {
     0% { 
         transform: translateX(0px) translateY(0px) rotate(0deg); 
@@ -285,33 +305,20 @@ header h1 {
     }
 }
 
-/* Animación de apertura del sobre */
+/* Animación de apertura del sobre - Rotación 3D en el eje X para simular apertura */
 @keyframes envelopeOpen {
     0% { transform: rotateX(0deg); }
     50% { transform: rotateX(-90deg); }
     100% { transform: rotateX(-180deg); }
 }
 
-@keyframes letterRise {
-    0% { 
-        opacity: 0; 
-        transform: translateY(30px) scale(0.8); 
-    }
-    100% { 
-        opacity: 1; 
-        transform: translateY(0) scale(1); 
-    }
-}
-
-.envelope.clicked .envelope-flap {
+/* Trigger de animación al hacer clic - Solo aplica animación de apertura a la solapa */
+.envelope.clicked .envelope-flap,
+.envelope.opening .envelope-flap {
     animation: envelopeOpen 0.5s ease-in-out forwards;
 }
 
-.envelope.clicked .envelope-content {
-    animation: letterRise 0.4s ease-out 0.2s forwards;
-}
-
-/* Modales */
+/* Modal overlay - Capa de fondo oscuro semitransparente para ventanas modales */
 .modal {
     display: none;
     position: fixed;
@@ -320,29 +327,33 @@ header h1 {
     top: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.8);
-    backdrop-filter: blur(5px);
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(10px);
 }
 
+/* Contenido del modal - Ventana central con fondo blanco y efectos de sombra */
 .modal-content {
-    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+    background: rgba(255, 255, 255, 0.95);
     margin: 5% auto;
     padding: 30px;
     border-radius: 20px;
     width: 90%;
     max-width: 600px;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
     position: relative;
     animation: modalSlideIn 0.3s ease;
+    backdrop-filter: blur(20px);
 }
 
+/* Animación de entrada del modal - Deslizamiento suave desde arriba con fade-in */
 @keyframes modalSlideIn {
     from { transform: translateY(-50px); opacity: 0; }
     to { transform: translateY(0); opacity: 1; }
 }
 
+/* Botón cerrar modal - X en esquina superior derecha para cerrar ventanas modales */
 .close {
-    color: #aaa;
+    color: #666;
     float: right;
     font-size: 28px;
     font-weight: bold;
@@ -350,18 +361,21 @@ header h1 {
     position: absolute;
     right: 20px;
     top: 15px;
+    transition: all 0.3s ease;
 }
 
+/* Efecto hover del botón cerrar - Oscurece el color al pasar el ratón */
 .close:hover {
     color: #333;
 }
 
-/* Carta completa en modal */
+/* Vista completa de carta - Contenedor centrado para mostrar carta expandida en modal */
 .card-full {
     text-align: center;
     padding: 20px 0;
 }
 
+/* Título de carta completa - Encabezado principal con borde inferior azul */
 .card-full h2 {
     color: #333;
     font-size: 2rem;
@@ -370,12 +384,14 @@ header h1 {
     padding-bottom: 10px;
 }
 
+/* Fecha en vista completa - Información temporal en color gris */
 .card-full .card-date {
     color: #888;
     font-size: 0.9rem;
     margin-bottom: 20px;
 }
 
+/* Contenido completo de la carta - Área principal del mensaje con fondo azul claro */
 .card-full .card-content {
     background: rgba(102, 126, 234, 0.1);
     padding: 25px;
@@ -387,48 +403,62 @@ header h1 {
     border-left: 4px solid #667eea;
 }
 
-/* Formulario de creación */
+/* Título del formulario de creación - Encabezado centrado para el formulario de nueva carta */
 .create-form h2 {
     text-align: center;
-    color: #333;
+    color: #2c3e50;
     margin-bottom: 25px;
     font-size: 1.8rem;
 }
 
+/* Grupo de campos del formulario - Contenedor individual para cada campo con espaciado */
 .form-group {
     margin-bottom: 20px;
 }
 
+/* Etiquetas de campos - Texto descriptivo para cada input del formulario */
 .form-group label {
     display: block;
     margin-bottom: 8px;
-    color: #333;
+    color: #2c3e50;
     font-weight: 500;
 }
 
+/* Campos de entrada del formulario - Inputs y textareas con bordes y padding estándar */
 .form-group input,
 .form-group textarea {
     width: 100%;
     padding: 12px 15px;
-    border: 2px solid #e9ecef;
+    border: 2px solid #ddd;
     border-radius: 10px;
     font-size: 1rem;
-    transition: border-color 0.3s ease;
+    transition: all 0.3s ease;
     font-family: inherit;
+    background: white;
+    color: #333;
 }
 
+/* Texto placeholder - Color gris para el texto de ayuda en campos vacíos */
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+    color: #999;
+}
+
+/* Estado focus de campos - Borde azul y sombra cuando el campo está activo */
 .form-group input:focus,
 .form-group textarea:focus {
     outline: none;
     border-color: #667eea;
-    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
 }
 
+/* Área de texto - Configuración específica para el campo de mensaje */
 .form-group textarea {
     resize: vertical;
     min-height: 120px;
 }
 
+/* Contenedor de acciones - Área para botones de cancelar y enviar */
 .form-actions {
     display: flex;
     gap: 15px;
@@ -436,6 +466,7 @@ header h1 {
     margin-top: 30px;
 }
 
+/* Estilos base para botones - Configuración común para botones de cancelar y enviar */
 .cancel-btn,
 .send-btn {
     padding: 12px 24px;
@@ -446,79 +477,117 @@ header h1 {
     transition: all 0.3s ease;
 }
 
+/* Botón cancelar - Fondo gris claro para la acción de cancelar */
 .cancel-btn {
-    background: #6c757d;
-    color: white;
+    background: #ecf0f1;
+    color: #666;
+    backdrop-filter: blur(10px);
 }
 
+/* Efecto hover del botón cancelar - Cambio de color al pasar el ratón */
 .cancel-btn:hover {
-    background: #5a6268;
+    background: rgba(64, 224, 208, 0.2);
     transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(64, 224, 208, 0.3);
 }
 
+/* Botón enviar - Gradiente multicolor con animación y efectos visuales */
 .send-btn {
-    background: linear-gradient(45deg, #28a745, #20c997);
+    background: linear-gradient(45deg, 
+        #10b981 0%, 
+        #3b82f6 25%, 
+        #9333ea 50%, 
+        #40e0d0 100%);
+    background-size: 300% 300%;
+    animation: auroraButton 6s ease-in-out infinite;
     color: white;
-    box-shadow: 0 4px 15px rgba(40, 167, 69, 0.4);
+    box-shadow: 0 4px 15px rgba(64, 224, 208, 0.4);
 }
 
+/* Efecto hover del botón enviar - Elevación y sombra más intensa al pasar el ratón */
 .send-btn:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(40, 167, 69, 0.6);
+    box-shadow: 0 6px 25px rgba(64, 224, 208, 0.6);
 }
 
-/* Responsive */
+/* Diseño responsive para tablets y móviles - Adaptaciones para pantallas menores a 768px */
 @media (max-width: 768px) {
+    /* Header responsive - Cambia a diseño vertical en móviles */
     header {
         padding: 15px 20px;
         flex-direction: column;
         gap: 15px;
     }
     
+    /* Título responsive - Reduce el tamaño de fuente en móviles */
     header h1 {
         font-size: 2rem;
     }
     
+    /* Contenedor de cartas responsive - Reduce el padding en móviles */
     .cards-container {
         padding: 20px;
     }
     
+    /* Cartas responsive - Cambia posicionamiento absoluto a relativo en móviles */
     .floating-card {
-        width: 250px;
-        height: 180px;
+        width: 225px; /* 250px - 10% = 225px */
+        height: 162px; /* 180px - 10% = 162px */
         position: relative !important;
         margin: 20px auto;
         display: block !important;
     }
     
+    /* Dirección responsive - Ajusta tamaño de fuente y ancho en móviles */
     .envelope-address {
         font-size: 0.7rem;
         max-width: 55%;
     }
     
+    /* Sello responsive - Reduce dimensiones en móviles */
     .envelope-stamp {
         width: 25px;
         height: 20px;
         font-size: 8px;
     }
     
+    /* Modal responsive - Ajusta márgenes y dimensiones para móviles */
     .modal-content {
         margin: 10% auto;
         width: 95%;
         padding: 20px;
     }
     
+    /* Acciones del formulario responsive - Cambia a diseño vertical en móviles */
     .form-actions {
         flex-direction: column;
     }
 }
 
-/* Efectos adicionales para los sobres */
+/* Efecto hover alternativo del botón cancelar - Versión simplificada con color gris */
+.cancel-btn:hover {
+    background: #bdc3c7;
+}
+
+/* Botón enviar alternativo - Gradiente azul-púrpura más simple */
+.send-btn {
+    background: linear-gradient(45deg, #667eea, #764ba2);
+    color: white;
+}
+
+/* Efecto hover alternativo del botón enviar - Elevación con sombra azul */
+.send-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.3);
+}
+
+/* Efecto hover del sello - Escalado y sombra coral al pasar ratón sobre el sello */
 .envelope:hover .envelope-stamp {
     transform: scale(1.1);
     box-shadow: 0 2px 8px rgba(255, 107, 107, 0.4);
 }
 
+/* Sombra de texto en dirección - Mejora la legibilidad del texto de la dirección */
 .envelope-address {
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
 }

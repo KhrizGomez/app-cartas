@@ -76,7 +76,7 @@ app.get('/api/cards', async (req, res) => {
         }
         
         const result = await pool.request().query(`
-            SELECT id_, title_, message_, sender_, recipient_, date_
+            SELECT TOP 30 id_, title_, message_, sender_, recipient_, date_
             FROM cards 
             ORDER BY date_ DESC
         `);

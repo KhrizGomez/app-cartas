@@ -6,8 +6,8 @@ let cards = [];
 
 // Sistema de posicionamiento sin superposiciones
 let occupiedPositions = [];
-const cardWidth = 280;
-const cardHeight = 200;
+const cardWidth = 252;  // 280px - 10% = 252px
+const cardHeight = 180; // 200px - 10% = 180px
 const minDistance = 50; // Distancia mínima entre cartas
 
 // Variables para el sistema de arrastre
@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     setupEventListeners();
 });
 
-// Función para verificar si dos rectángulos se superponen más del 50%
+// Función para verificar si dos rectángulos se superponen más del 75%
 function isOverlapping(rect1, rect2) {
     // Calcular área de intersección
     const overlapLeft = Math.max(rect1.left, rect2.left);
@@ -64,15 +64,15 @@ function isOverlapping(rect1, rect2) {
     const area1 = (rect1.right - rect1.left) * (rect1.bottom - rect1.top);
     const area2 = (rect2.right - rect2.left) * (rect2.bottom - rect2.top);
     
-    // Verificar si la superposición es mayor al 50% de cualquiera de las dos cartas
+    // Verificar si la superposición es mayor al 75% de cualquiera de las dos cartas
     const overlapPercentage1 = overlapArea / area1;
     const overlapPercentage2 = overlapArea / area2;
     
-    // Solo considerar superposición problemática si cubre más del 50% de alguna carta
-    return overlapPercentage1 > 0.5 || overlapPercentage2 > 0.5;
+    // Solo considerar superposición problemática si cubre más del 75% de alguna carta
+    return overlapPercentage1 > 0.75 || overlapPercentage2 > 0.75;
 }
 
-// Función para encontrar una posición válida sin superposiciones mayores al 50%
+// Función para encontrar una posición válida sin superposiciones mayores al 75%
 function findValidPosition() {
     const container = cardsContainer;
     const containerRect = container.getBoundingClientRect();
@@ -93,7 +93,7 @@ function findValidPosition() {
             bottom: y + cardHeight
         };
         
-        // Verificar si se superpone más del 50% con alguna posición existente
+        // Verificar si se superpone más del 75% con alguna posición existente
         let hasProblematicOverlap = false;
         for (let occupiedRect of occupiedPositions) {
             if (isOverlapping(newRect, occupiedRect)) {
@@ -366,6 +366,13 @@ async function createNewCard() {
                 newCardElement.style.transition = 'all 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55)';
                 newCardElement.style.transform = 'scale(1) rotate(0deg)';
                 newCardElement.style.opacity = '1';
+                
+                // Limpiar estilos inline después de la animación para no interferir con drag & drop
+                setTimeout(() => {
+                    newCardElement.style.transition = '';
+                    newCardElement.style.transform = '';
+                    newCardElement.style.opacity = '';
+                }, 800); // Tiempo de la animación
             }, 100);
         }, 500);
         
@@ -463,6 +470,10 @@ function startDrag(cardElement, card) {
     isDragging = true;
     hasMoved = false; // Resetear el flag de movimiento
     draggedCard = cardElement;
+    
+    // Limpiar cualquier estilo inline que pueda interferir con el drag & drop
+    cardElement.style.transition = '';
+    cardElement.style.transform = '';
     
     // Traer la carta al frente al interactuar con ella
     cardElement.style.zIndex = currentZIndex++;
@@ -571,6 +582,13 @@ function endDrag() {
     isDragging = false;
     draggedCard.classList.remove('dragging');
     
+    // Restaurar transiciones CSS normales después del drag
+    setTimeout(() => {
+        if (draggedCard) {
+            draggedCard.style.transition = '';
+        }
+    }, 50);
+    
     if (wasReallyDragged) {
         // Solo procesar posición si realmente se movió
         const draggedRect = draggedCard.getBoundingClientRect();
@@ -586,7 +604,7 @@ function endDrag() {
             bottom: newY + cardHeight
         };
         
-        // Verificar superposición mayor al 50%
+        // Verificar superposición mayor al 75%
         let needsRepositioning = false;
         for (let occupiedRect of occupiedPositions) {
             if (isOverlapping(newRect, occupiedRect)) {
@@ -596,7 +614,7 @@ function endDrag() {
         }
         
         if (needsRepositioning) {
-            // Si hay superposición mayor al 50%, encontrar nueva posición
+            // Si hay superposición mayor al 75%, encontrar nueva posición
             const validPosition = findValidPosition();
             draggedCard.style.left = `${validPosition.x}px`;
             draggedCard.style.top = `${validPosition.y}px`;
@@ -609,7 +627,7 @@ function endDrag() {
                 card.position = validPosition;
             }
         } else {
-            // Posición válida (superposición menor al 50%), agregar a ocupadas
+            // Posición válida (superposición menor al 75%), agregar a ocupadas
             occupiedPositions.push(newRect);
             
             // Actualizar posición en el objeto carta
