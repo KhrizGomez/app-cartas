@@ -85,8 +85,9 @@ header h1 {
     cursor: grabbing;
     z-index: 10000 !important;
     animation: none;
-    transform: rotate(5deg) scale(1.1);
     transition: none;
+    transform: none; /* Quitar transformación que interfiere con drag & drop */
+    opacity: 0.9; /* Efecto visual sutil durante el arrastre */
 }
 
 .floating-card.dragging .envelope {

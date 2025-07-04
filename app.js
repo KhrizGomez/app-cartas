@@ -430,6 +430,9 @@ function handleMouseDown(e, cardElement, card) {
     e.preventDefault();
     
     const rect = cardElement.getBoundingClientRect();
+    const containerRect = cardsContainer.getBoundingClientRect();
+    
+    // Calcular offset relativo al contenedor, no al elemento
     dragOffset.x = e.clientX - rect.left;
     dragOffset.y = e.clientY - rect.top;
     dragStartPos.x = e.clientX;
@@ -444,6 +447,9 @@ function handleTouchStart(e, cardElement, card) {
     
     const touch = e.touches[0];
     const rect = cardElement.getBoundingClientRect();
+    const containerRect = cardsContainer.getBoundingClientRect();
+    
+    // Calcular offset relativo al contenedor, no al elemento
     dragOffset.x = touch.clientX - rect.left;
     dragOffset.y = touch.clientY - rect.top;
     dragStartPos.x = touch.clientX;

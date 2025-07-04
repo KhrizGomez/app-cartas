@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Drag & Drop</title>
+    <style>
+        .container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            background: #f0f0f0;
+            overflow: hidden;
+        }
+        
+        .test-card {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background: red;
+            cursor: grab;
+            left: 100px;
+            top: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+        
+        .test-card.dragging {
+            cursor: grabbing;
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="container">
+        <div class="test-card" id="testCard">DRAG</div>
+    </div>
+
+    <script>
+        const container = document.getElementById('container');
+        const testCard = document.getElementById('testCard');
+        
+        let isDragging = false;
+        let dragOffset = { x: 0, y: 0 };
+        
+        testCard.addEventListener('mousedown', (e) => {
+            e.preventDefault();
+            
+            const rect = testCard.getBoundingClientRect();
+            const containerRect = container.getBoundingClientRect();
+            
+            // Calcular offset donde se hizo clic dentro del elemento
+            dragOffset.x = e.clientX - rect.left;
+            dragOffset.y = e.clientY - rect.top;
+            
+            console.log('MouseDown:', {
+                clientX: e.clientX,
+                clientY: e.clientY,
+                rectLeft: rect.left,
+                rectTop: rect.top,
+                dragOffsetX: dragOffset.x,
+                dragOffsetY: dragOffset.y
+            });
+            
+            isDragging = true;
+            testCard.classList.add('dragging');
+        });
+        
+        document.addEventListener('mousemove', (e) => {
+            if (!isDragging) return;
+            
+            const containerRect = container.getBoundingClientRect();
+            
+            // Calcular nueva posición
+            let newX = e.clientX - containerRect.left - dragOffset.x;
+            let newY = e.clientY - containerRect.top - dragOffset.y;
+            
+            console.log('MouseMove:', {
+                clientX: e.clientX,
+                clientY: e.clientY,
+                containerLeft: containerRect.left,
+                containerTop: containerRect.top,
+                dragOffsetX: dragOffset.x,
+                dragOffsetY: dragOffset.y,
+                newX,
+                newY
+            });
+            
+            // Aplicar posición
+            testCard.style.left = newX + 'px';
+            testCard.style.top = newY + 'px';
+        });
+        
+        document.addEventListener('mouseup', () => {
+            if (isDragging) {
+                isDragging = false;
+                testCard.classList.remove('dragging');
+                console.log('MouseUp');
+            }
+        });
+    </script>
+</body>
+</html>
