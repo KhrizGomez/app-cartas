@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cartas Flotantes</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header con botón para crear nueva carta -->
+        <header>
+            <h1>Buzon</h1>
+            <button id="createCardBtn" class="create-btn">+ Nueva Carta</button>
+        </header>
+
+        <!-- Área principal donde flotan las cartas -->
+        <main class="cards-container" id="cardsContainer">
+            <!-- Las cartas se generarán dinámicamente aquí -->
+        </main>
+
+        <!-- Modal para mostrar carta completa -->
+        <div id="cardModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <div class="card-full">
+                    <h2 id="modalTitle"></h2>
+                    <p class="card-date" id="modalDate"></p>
+                    <div class="card-content" id="modalContent"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal para crear nueva carta -->
+        <div id="createModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <div class="create-form">
+                    <h2>Crear Nueva Carta</h2>
+                    <form id="createCardForm">
+                        <div class="form-group">
+                            <label for="cardTitle">Título de la carta:</label>
+                            <input type="text" id="cardTitle" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="cardMessage">Mensaje:</label>
+                            <textarea id="cardMessage" rows="6" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="cardRecipient">Para:</label>
+                            <input type="text" id="cardRecipient" placeholder="Destinatario">
+                        </div>
+                        <div class="form-group">
+                            <label for="cardSender">De:</label>
+                            <input type="text" id="cardSender" placeholder="Remitente">
+                        </div>
+                        <div class="form-actions">
+                            <button type="button" class="cancel-btn">Cancelar</button>
+                            <button type="submit" class="send-btn">Enviar Carta</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="app.js"></script>
+</body>
+</html>
