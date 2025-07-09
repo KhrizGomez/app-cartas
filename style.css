@@ -3,15 +3,16 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Montserrat';
+    font-family: 'Fredoka', Arial, sans-serif;
 }
 
-/* Configuración del cuerpo principal - Define fuente, fondo degradado y altura mínima */
+/* Configuración del cuerpo principal - Define fuente, fondo degradado rosa vibrante y altura mínima */
 body {
     font-family: 'Arial', sans-serif;
-    background: linear-gradient(135deg, #2c3e50, #3498db, #9b59b6);
     min-height: 100vh;
     overflow-x: hidden;
+    background: linear-gradient(135deg, #ff34a3 0%, #f8d851 100%);
+    color: var(--rosa-fuerte);
 }
 
 /* Contenedor principal - Ocupa toda la pantalla y sirve como base para los elementos */
@@ -21,43 +22,47 @@ body {
     position: relative;
 }
 
-/* Header - Barra superior con título y botón, fondo transparente con desenfoque */
+/* Header - Barra superior con título y botón, fondo semitransparente con desenfoque */
 header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 8px 50px;
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 20px 50px;
+    background: linear-gradient(90deg, #e30044 60%, #f78a6d 100%);
+    backdrop-filter: blur(15px);
+    border-bottom-left-radius: 2rem;
+    border-bottom-right-radius: 2rem;
 }
 
 /* Título principal - Texto blanco con sombra para legibilidad */
 header h1 {
     color: white;
-    font-size: 2rem;
-    font-weight: 400;
+    font-size: 2.2rem;
+    font-weight: 600;
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
-/* Botón crear carta - Gradiente naranja-rojo con efectos hover y sombra */
+/* Botón crear carta - Estilo amarillo vibrante con texto rosa como en la imagen */
 .create-btn {
-    background: linear-gradient(45deg, #e74c3c, #f39c12);
-    color: white;
-    border: none;
-    padding: 12px 24px;
-    border-radius: 25px;
-    font-size: 1rem;
-    font-weight: 600;
+    background: #f8d851;
+    color: #e30044;
+    border: 2px dashed #e84393;
+    padding: 12px 25px;
+    border-radius: 1.5rem;
+    font-size: 1.13rem;
+    font-weight: 700;
     cursor: pointer;
     transition: all 0.3s ease;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    text-shadow: none;
+    letter-spacing: 0.5px;
 }
 
-/* Efecto hover del botón crear - Elevación y sombra más pronunciada */
+/* Efecto hover del botón crear - Efecto sutil manteniendo el estilo amarillo */
 .create-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 25px rgba(253, 203, 110, 0.4);
+    background: #f9ca24;
 }
 
 /* Contenedor de cartas - Área principal donde flotan las cartas con padding y overflow oculto */
@@ -106,22 +111,22 @@ header h1 {
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
 }
 
-/* Sobre principal - Contenedor base con fondo beige y efectos 3D */
+/* Sobre principal - Contenedor base con fondo blanco limpio y efectos 3D */
 .envelope {
     position: relative;
     width: 100%;
     height: 100%;
-    background: linear-gradient(145deg, #f5f5dc, #faebd7);
-    border-radius: 8px;
+    background: #ffffff;
+    border-radius: 12px;
     box-shadow: 
-        0 8px 32px rgba(0, 0, 0, 0.15),
-        inset 0 1px 0 rgba(255, 255, 255, 0.4);
+        0 10px 40px rgba(0, 0, 0, 0.25),
+        inset 0 1px 0 rgba(255, 255, 255, 0.8);
     transform-style: preserve-3d;
     perspective: 1200px;
     transition: all 0.3s ease;
 }
 
-/* Parte trasera del sobre - Crea el efecto visual de profundidad con color intermedio */
+/* Parte trasera del sobre - Crea el efecto visual de profundidad con color blanco suave */
 .envelope::before {
     content: '';
     position: absolute;
@@ -129,44 +134,44 @@ header h1 {
     left: 0;
     width: 100%;
     height: 50%;
-    background: linear-gradient(145deg, #f0e6d2, #eaddc4);
+    background: linear-gradient(145deg, #f1f2f6, #ddd6fe);
     clip-path: polygon(0 0, 100% 0, 50% 100%);
-    border-radius: 8px 8px 0 0;
+    border-radius: 12px 12px 0 0;
     z-index: 2;
     transition: all 0.6s ease;
     transform-origin: top center;
     box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-/* Solapa del sobre - Parte superior que se puede "abrir" con color ligeramente más oscuro para contraste */
+/* Solapa del sobre - Parte superior que se puede "abrir" con gradiente suave */
 .envelope-flap {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 50%;
-    background: linear-gradient(145deg, #e8dcc6, #ddd1b8);
+    background: linear-gradient(145deg, #eee8e8, #f1ebeb);
     clip-path: polygon(0 0, 100% 0, 50% 100%);
-    border-radius: 8px 8px 0 0;
+    border-radius: 12px 12px 0 0;
     z-index: 3;
     transition: all 0.6s ease;
     transform-origin: top center;
     cursor: pointer;
     box-shadow: 
-        0 6px 15px rgba(0, 0, 0, 0.3),
-        inset 0 -3px 6px rgba(0, 0, 0, 0.15),
-        0 1px 3px rgba(0, 0, 0, 0.2);
+        0 8px 20px rgba(0, 0, 0, 0.3),
+        inset 0 -3px 6px rgba(0, 0, 0, 0.1),
+        0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
-/* Cuerpo del sobre - Base visible con el mismo fondo beige que el envelope */
+/* Cuerpo del sobre - Base visible con fondo blanco limpio */
 .envelope-body {
     position: absolute;
     bottom: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(145deg, #f5f5dc, #faebd7);
-    border-radius: 8px;
+    background: linear-gradient(120deg, #ffffff 90%, #ff34a320 100%);
+    border-radius: 12px;
     z-index: 1;
 }
 
@@ -181,24 +186,23 @@ header h1 {
     transform: rotateX(-180deg);
 }
 
-/* Sello postal - Pequeño rectángulo decorativo en esquina superior derecha con gradiente coral */
+/* Sello postal - Pequeño rectángulo decorativo en esquina superior derecha con gradiente vibrante */
 .envelope-stamp {
     position: absolute;
     top: 10px;
     right: 10px;
-    width: 30px;
-    height: 25px;
-    background: linear-gradient(45deg, #ff6b6b, #ee5a24);
-    border: 2px solid #c44569;
-    border-radius: 3px;
+    width: 32px;
+    height: 28px;
+    background: #e30044;
+    border-radius: 4px;
     z-index: 4;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 10px;
+    font-size: 11px;
     color: white;
     font-weight: bold;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
 }
 
 /* Dirección del sobre - Texto estilo máquina de escribir en la parte frontal del sobre */
@@ -331,18 +335,19 @@ header h1 {
     backdrop-filter: blur(10px);
 }
 
-/* Contenido del modal - Ventana central con fondo blanco y efectos de sombra */
+/* Contenido del modal - Ventana central con fondo blanco sólido y efectos de sombra */
 .modal-content {
-    background: rgba(255, 255, 255, 0.95);
+    background: #ffffff;
     margin: 5% auto;
-    padding: 30px;
-    border-radius: 20px;
+    padding: 35px;
+    border-radius: 25px;
     width: 90%;
     max-width: 600px;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 25px 80px rgba(0, 0, 0, 0.4);
     position: relative;
     animation: modalSlideIn 0.3s ease;
     backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 /* Animación de entrada del modal - Deslizamiento suave desde arriba con fade-in */
@@ -375,12 +380,12 @@ header h1 {
     padding: 20px 0;
 }
 
-/* Título de carta completa - Encabezado principal con borde inferior azul */
+/* Título de carta completa - Encabezado principal con borde inferior rojizo */
 .card-full h2 {
     color: #333;
     font-size: 2rem;
     margin-bottom: 10px;
-    border-bottom: 2px solid #667eea;
+    border-bottom: 2px solid #e30044;
     padding-bottom: 10px;
 }
 
@@ -391,16 +396,16 @@ header h1 {
     margin-bottom: 20px;
 }
 
-/* Contenido completo de la carta - Área principal del mensaje con fondo azul claro */
+/* Contenido completo de la carta - Área principal del mensaje con fondo rojizo claro */
 .card-full .card-content {
-    background: rgba(102, 126, 234, 0.1);
+    background: rgba(227, 0, 68, 0.1);
     padding: 25px;
     border-radius: 15px;
     margin: 20px 0;
     line-height: 1.6;
     font-size: 1.1rem;
     color: #333;
-    border-left: 4px solid #667eea;
+    border-left: 4px solid #e30044;
 }
 
 /* Título del formulario de creación - Encabezado centrado para el formulario de nueva carta */
@@ -444,12 +449,12 @@ header h1 {
     color: #999;
 }
 
-/* Estado focus de campos - Borde azul y sombra cuando el campo está activo */
+/* Estado focus de campos - Borde rojizo y sombra cuando el campo está activo */
 .form-group input:focus,
 .form-group textarea:focus {
     outline: none;
-    border-color: #667eea;
-    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+    border-color: #e30044;
+    box-shadow: 0 0 0 3px rgba(227, 0, 68, 0.2);
 }
 
 /* Área de texto - Configuración específica para el campo de mensaje */
@@ -491,23 +496,21 @@ header h1 {
     box-shadow: 0 5px 15px rgba(64, 224, 208, 0.3);
 }
 
-/* Botón enviar - Gradiente multicolor con animación y efectos visuales */
+/* Botón enviar - Mismo estilo que Nueva Carta: amarillo con texto rosa y borde punteado */
 .send-btn {
-    background: linear-gradient(45deg, 
-        #10b981 0%, 
-        #3b82f6 25%, 
-        #9333ea 50%, 
-        #40e0d0 100%);
-    background-size: 300% 300%;
-    animation: auroraButton 6s ease-in-out infinite;
-    color: white;
-    box-shadow: 0 4px 15px rgba(64, 224, 208, 0.4);
+    background: #f8d851;
+    color: #e30044;
+    border-radius: 1.5rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
-/* Efecto hover del botón enviar - Elevación y sombra más intensa al pasar el ratón */
+/* Efecto hover del botón enviar - Mismo efecto que Nueva Carta */
 .send-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 25px rgba(64, 224, 208, 0.6);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 25px rgba(248, 216, 81, 0.4);
+    background: #f9ca24;
 }
 
 /* Diseño responsive para tablets y móviles - Adaptaciones para pantallas menores a 768px */
@@ -567,18 +570,6 @@ header h1 {
 /* Efecto hover alternativo del botón cancelar - Versión simplificada con color gris */
 .cancel-btn:hover {
     background: #bdc3c7;
-}
-
-/* Botón enviar alternativo - Gradiente azul-púrpura más simple */
-.send-btn {
-    background: linear-gradient(45deg, #667eea, #764ba2);
-    color: white;
-}
-
-/* Efecto hover alternativo del botón enviar - Elevación con sombra azul */
-.send-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.3);
 }
 
 /* Efecto hover del sello - Escalado y sombra coral al pasar ratón sobre el sello */
